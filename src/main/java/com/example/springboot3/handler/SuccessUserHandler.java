@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.Collection;
 
 @Component
-public class LoginSuccessHandler implements AuthenticationSuccessHandler {
+public class SuccessUserHandler implements AuthenticationSuccessHandler {
 
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
