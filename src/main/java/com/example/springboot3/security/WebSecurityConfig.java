@@ -1,6 +1,7 @@
 package com.example.springboot3.security;
 
 import com.example.springboot3.handler.SuccessUserHandler;
+import com.example.springboot3.service.UserDTLSService;
 import com.example.springboot3.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -14,12 +15,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    @Autowired
-    private UserService userService;
+
+    private final UserDTLSService userDTLSService;
+
+    public WebSecurityConfig(UserDTLSService userDTLSService) {
+        this.userDTLSService = userDTLSService;
+    }
 
     @Autowired
     protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService).passwordEncoder(bCryptPasswordEncoder());
+        auth.userDetailsService(userDTLSService).passwordEncoder(bCryptPasswordEncoder());
     }
 
     @Override

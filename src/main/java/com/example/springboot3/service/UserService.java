@@ -13,11 +13,16 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class UserService implements UserDetailsService {
+public class UserService {
+
+    private final UserRepository userRepository;
+
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    public UserService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.userRepository = userRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
 
     public void addUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
@@ -49,12 +54,5 @@ public class UserService implements UserDetailsService {
         return userRepository.findByusername(username);
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        User user = getUserByName(s);
-        if (user == null) {
-            throw new UsernameNotFoundException("User not found " + s);
-        }
-        return user;
-    }
+
 }

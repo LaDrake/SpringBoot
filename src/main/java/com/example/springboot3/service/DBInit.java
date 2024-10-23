@@ -14,12 +14,12 @@ import java.util.Set;
 public class DBInit {
     final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final UserService userService;
-    private final RoleService roleService;
+    private final RoleServiceImpl roleServiceImpl;
 
     @Autowired
-    public DBInit(UserService userService, RoleService roleService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public DBInit(UserService userService, RoleServiceImpl roleServiceImpl, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userService = userService;
-        this.roleService = roleService;
+        this.roleServiceImpl = roleServiceImpl;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
@@ -27,14 +27,14 @@ public class DBInit {
     private void postConstruct() {
         Role role1 = new Role("ROLE_ADMIN");
         Role role2 = new Role("ROLE_USER");
-        roleService.addRole(role1);
-        roleService.addRole(role2);
+        roleServiceImpl.addRole(role1);
+        roleServiceImpl.addRole(role2);
         Set<Role> roles_admin = new HashSet<>();
-        roles_admin.add(roleService.getRoleByName("ROLE_ADMIN"));
+        roles_admin.add(roleServiceImpl.getRoleByName("ROLE_ADMIN"));
         User admin = new User("admin", "admin", "admin@admin.ru", "1234", roles_admin);
         userService.addUser(admin);
         Set<Role> roles_user = new HashSet<>();
-        roles_user.add(roleService.getRoleByName("ROLE_USER"));
+        roles_user.add(roleServiceImpl.getRoleByName("ROLE_USER"));
         User user = new User("user", "user",
                 "user@user.ru", "1234", roles_user);
         userService.addUser(user);
