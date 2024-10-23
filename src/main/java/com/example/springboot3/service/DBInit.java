@@ -5,21 +5,24 @@ import com.example.springboot3.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
+
 import javax.annotation.PostConstruct;
 import java.util.HashSet;
 import java.util.Set;
 
 @Component
 public class DBInit {
+    final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final UserService userService;
     private final RoleService roleService;
-    final BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @Autowired
     public DBInit(UserService userService, RoleService roleService, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userService = userService;
         this.roleService = roleService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
+
     @PostConstruct
     private void postConstruct() {
         Role role1 = new Role("ROLE_ADMIN");
@@ -33,7 +36,7 @@ public class DBInit {
         Set<Role> roles_user = new HashSet<>();
         roles_user.add(roleService.getRoleByName("ROLE_USER"));
         User user = new User("user", "user",
-                "user@user.ru", "1234",  roles_user);
+                "user@user.ru", "1234", roles_user);
         userService.addUser(user);
     }
 }

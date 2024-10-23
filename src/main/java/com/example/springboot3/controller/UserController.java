@@ -1,16 +1,14 @@
 package com.example.springboot3.controller;
 
+import com.example.springboot3.entity.Role;
+import com.example.springboot3.entity.User;
 import com.example.springboot3.service.RoleService;
 import com.example.springboot3.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import com.example.springboot3.entity.Role;
-import com.example.springboot3.entity.User;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -24,7 +22,7 @@ public class UserController {
 
 
     @GetMapping(value = "/user")
-    public String userInfo(@AuthenticationPrincipal User user, Model model){
+    public String userInfo(@AuthenticationPrincipal User user, Model model) {
         model.addAttribute("user", user);
         model.addAttribute("roles", user.getRoles());
         return "userpage";
@@ -78,8 +76,8 @@ public class UserController {
         return "redirect:/admin";
     }
 
-    @GetMapping(value ="/login")
-    public String login(){
+    @GetMapping(value = "/login")
+    public String login() {
         return "login";
     }
 }
